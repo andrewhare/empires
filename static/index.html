@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Empires</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="content">
+							<div class="inner">
+								<h1>Empires</h1>
+								<p>Take over the world, one guess at a time.</p>
+							</div>
+						</div>
+						<nav>
+							<ul>
+								<li><a href="#play">Play</a></li>
+							</ul>
+						</nav>
+					</header>
+
+				<!-- Main -->
+					<div id="main">
+							
+							<article id="play">
+								<h2 class="major">Empires</h2>
+								
+								<form method="post" action="#">
+									<div class="fields">
+										<div id="real-name-fields" class="field">
+											<label for="name">What is your real name?</label>
+											<input type="text" name="real-name" id="real-name" />
+											<br/>
+											<input type="checkbox" id="admin" name="admin">
+											<label for="admin">Are you running the game?</label>
+										</div>
+										<div id="real-name-display" class="field" style="display:none;">
+											<h3>Welcome back <span id="display-name"></span> <a href="#" id="logout">(logout)</a></h3>
+										</div>
+										<div class="field">
+											<label for="name">Who is your character?</label>
+											<input type="text" name="character" id="character" />
+										</div>
+									</div>
+									<ul class="actions">
+										<li><input type="button" value="Begin" id="save-real-name" class="primary" /></li>
+									</ul>
+								</form>
+							</article>
+
+							<article id="list">
+								<h2 class="major">Empires</h2>
+								<table>
+									<tbody id="characters">
+									</tbody>
+								</table>
+								<ul class="actions">
+									<li>
+										<input type="button" value="Freeze List" id="freeze" class="primary" />
+										<input type="button" value="Un-Freeze List" id="unfreeze" class="primary" style="display:none;" />
+									</li>
+									<li><input type="button" value="Start Over" id="start-over" class="primary" /></li>
+								</ul>
+							</article>
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+					</footer>
+
+			</div>
+
+		<!-- BG -->
+			<div id="bg"></div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+			<script src="assets/js/app.js"></script>
+	</body>
+</html>
