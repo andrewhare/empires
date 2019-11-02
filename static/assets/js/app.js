@@ -13,24 +13,23 @@ function resetUI() {
     }
 }
 
-function unfreeze() {
-    return setInterval(function() {
-        $.ajax({url: "/characters"})
-            .done(function(list) {
-                $('#characters').empty();
-                for (var i = 0; i < list.length; i++) {
-                    $("<tr><td>" + list[i] + "</td></tr>").appendTo('#characters');
-                }
-            });
-    }, 1000);
-}
-
 $(function() {
     var listInterval = 0;
 
     resetUI();
+
+    $("#show-character").click(function() {
+        if ($("#character").hasClass("key")) {
+            $("#character").removeClass("key");
+            $("#show-character").attr("value", "Hide Character");
+        } else {
+            $("#character").addClass("key");
+            $("#show-character").attr("value", "Show Character");
+        }
+    });
     
     $("#save-real-name").click(function() {
+        $("input, select, textarea").attr("autocomplete", "off");
         var realName = $("#real-name").val()
         if (!realName) {
             realName = localStorage.getItem("real-name");
@@ -46,7 +45,7 @@ $(function() {
                 localStorage.setItem("admin", "√");
             }
             if (localStorage.getItem("admin") ==  "√") {
-                listInterval = unfreeze();
+                $("#refresh-list").click();
                 window.location.href = "#list";
             } else {
                 window.location.href = "#";
@@ -58,23 +57,24 @@ $(function() {
         });
     });
 
-    $("#freeze").click(function() {
-        clearInterval(listInterval);
-        $(this).hide();
-        $("#unfreeze").show();
+
+    $("#refresh-list").click(function() {
+        $.ajax({url: "/characters"})
+        .done(function(list) {
+            console.log(list)
+            $('#characters').empty();
+            for (var i = 0; i < list.length; i++) {
+                $("<tr><td>" + list[i] + "</td></tr>").appendTo('#characters');
+            }
+        });
     });
 
-    $("#unfreeze").click(function() {
-        listInterval = unfreeze();
-        $(this).hide();
-        $("#freeze").show();
-    });
-
-    $("#start-over").click(function() {
-        clearInterval(listInterval);
-        $("#unfreeze").hide();
-        $("#freeze").show();
-        window.location.href = "#";
+    $("#new-game").click(function() {
+        $('#characters').empty();
+        $.ajax({url: "/reset"})
+        .done(function() {
+            window.location.href = "#";
+        });
     });
 
     $("#logout").click(function(e) {

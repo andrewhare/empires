@@ -68,5 +68,10 @@ func main() {
 		return c.JSON(http.StatusOK, game.Characters())
 	})
 
+	e.GET("/reset", func(e echo.Context) error {
+		game = NewGame()
+		return nil
+	})
+
 	e.Logger.Fatal(e.Start(":8080"))
 }
