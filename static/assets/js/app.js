@@ -13,6 +13,18 @@ function resetUI() {
     }
 }
 
+function unfreeze() {
+    return setInterval(function() {
+        $.ajax({url: "/characters"})
+            .done(function(list) {
+                $('#characters').empty();
+                for (var i = 0; i < list.length; i++) {
+                    $("<tr><td>" + list[i] + "</td></tr>").appendTo('#characters');
+                }
+            });
+    }, 1000);
+}
+
 $(function() {
     var listInterval = 0;
 
@@ -29,7 +41,6 @@ $(function() {
     });
     
     $("#save-real-name").click(function() {
-        $("input, select, textarea").attr("autocomplete", "off");
         var realName = $("#real-name").val()
         if (!realName) {
             realName = localStorage.getItem("real-name");
@@ -45,7 +56,7 @@ $(function() {
                 localStorage.setItem("admin", "√");
             }
             if (localStorage.getItem("admin") ==  "√") {
-                $("#refresh-list").click();
+                listInterval = unfreeze();
                 window.location.href = "#list";
             } else {
                 window.location.href = "#";
@@ -57,24 +68,24 @@ $(function() {
         });
     });
 
-
-    $("#refresh-list").click(function() {
-        $.ajax({url: "/characters"})
-        .done(function(list) {
-            console.log(list)
-            $('#characters').empty();
-            for (var i = 0; i < list.length; i++) {
-                $("<tr><td>" + list[i] + "</td></tr>").appendTo('#characters');
-            }
-        });
+    $("#freeze").click(function() {
+        clearInterval(listInterval);
+        $(this).hide();
+        $("#unfreeze").show();
     });
 
-    $("#new-game").click(function() {
-        $('#characters').empty();
-        $.ajax({url: "/reset"})
-        .done(function() {
-            window.location.href = "#";
-        });
+    $("#unfreeze").click(function() {
+        listInterval = unfreeze();
+        $(this).hide();
+        $("#freeze").show();
+    });
+
+    $("#start-over").click(function() {
+        clearInterval(listInterval);
+        $("#unfreeze").hide();
+        $("#freeze").show();
+        window.location.href = "#";
+        window.location.reload(false); 
     });
 
     $("#logout").click(function(e) {
