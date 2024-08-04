@@ -12,8 +12,8 @@ import (
 
 func NewGame() *Game {
 	return &Game{
-		mu:                &sync.Mutex{},
-		usersToCharacters: make(map[string]string),
+		mu:    &sync.Mutex{},
+		users: make(map[string]string),
 	}
 }
 
@@ -23,20 +23,20 @@ type User struct {
 }
 
 type Game struct {
-	mu                *sync.Mutex
-	usersToCharacters map[string]string
+	mu    *sync.Mutex
+	users map[string]string
 }
 
 func (g *Game) Add(u *User) {
 	g.mu.Lock()
-	g.usersToCharacters[strings.ToUpper(u.Name)] = strings.ToUpper(u.Character)
+	g.users[strings.ToUpper(u.Name)] = strings.ToUpper(u.Character)
 	g.mu.Unlock()
 }
 
 func (g *Game) Characters() []string {
 	g.mu.Lock()
-	chars := make([]string, 0, len(g.usersToCharacters))
-	for _, s := range g.usersToCharacters {
+	chars := make([]string, 0, len(g.users))
+	for _, s := range g.users {
 		chars = append(chars, s)
 	}
 	g.mu.Unlock()
